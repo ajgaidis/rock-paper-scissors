@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors Match</title>
+
+    <link href="../static/css/match.css" rel="stylesheet">
+
+    <script type="text/javascript">
+
+        const selections = ["rock", "paper", "scissors"];
+        const whoBeatsWho = {"rock": "scissors", "scissors": "paper", "paper": "rock"};
+        const opposites = {"rock": ["scissors", "paper"], "scissors": ["rock", "paper"],
+                            "paper": ["rock", "scissors"]};
+
+        /**
+         * Function chooses a winner of a given match based on the criteria provided in the
+         * whoBeatsWho dictionary. Once a winner has been chosen, the function alerts the user of
+         * the winner and then reloads the webpage.
+         *
+         * @param player1Selection : string that is the user's selection -- is either "rock",
+         *                           "paper", or "scissors"
+         * @param computerSelection : string that is the computer's selection -- is either "rock",
+         *                           "paper", or "scissors"
+         */
+        function chooseWinner(player1Selection, computerSelection) {
+            if (player1Selection === computerSelection) {
+                alert("Tie!")
+            } else if (player1Selection !== whoBeatsWho[computerSelection]) {
+                alert("Awesome! Player 1 Wins!")
+            } else {
+                alert("Shucks, the computer won!")
+            }
+            location.reload();  // reload the page to a new game
+        }
+
+
+        /**
+         * Function hides the other selection buttons from the user and picks a RPS selection for
+         * the computer / displays it.
+         *
+         * @param selection : object corresponding to the button that the user pressed to make their
+         *                    selection
+         */
+        function select(selection) {
+            var buttonsToHide = opposites[selection.name];
+            document.getElementsByName(buttonsToHide[0])[0].style.visibility = "hidden";
+            document.getElementsByName(buttonsToHide[1])[0].style.visibility = "hidden";
+
+            // Choose a random selection for the computer
+            var computerSelection = selections[Math.floor(Math.random() * 10) % 3];
+            var computerButtonsToHide = opposites[computerSelection];
+            document.getElementsByName("computer-" + computerButtonsToHide[0])[0]
+                .style.visibility = "hidden";
+            document.getElementsByName("computer-" + computerButtonsToHide[1])[0]
+                .style.visibility = "hidden";
+
+            // Slow things down so it isn't super rushed ...
+            setTimeout(function(){chooseWinner(selection.name, computerSelection)}, 500);
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <h2 style="color: lightblue">Player 1</h2>
+    <div id="outer">
+        <div id="inner">
+            <button type="button" id="rps-button" name="rock" onclick="select(this)">🧗‍♀️</button>
+            <button type="button" id="rps-button" name="paper" onclick="select(this)">📄</button>
+            <button type="button" id="rps-button" name="scissors" onclick="select(this)">✂️</button>
+        </div>
+    </div>
+
+    <h2 style="color: lightcoral">Computer</h2>
+    <div id="outer">
+        <div id="inner">
+            <button type="button" class="disable-click" id="rps-button" name="computer-rock">🧗‍♀️</button>
+            <button type="button" class="disable-click" id="rps-button" name="computer-paper">📄</button>
+            <button type="button" class="disable-click" id="rps-button" name="computer-scissors">✂️</button>
+        </div>
+    </div>
+</body>
+
+</html>

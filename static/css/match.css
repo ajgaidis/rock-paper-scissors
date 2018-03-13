@@ -1,0 +1,23 @@
+h2 {
+    text-align: center;
+    font-family: Menlo;
+}
+
+.disable-click {
+    pointer-events: none;
+}
+
+#rps-button {
+    width: 200px;
+    height: 200px;
+    font-size: 125px;
+}
+
+#inner {
+    width: 50%;
+    margin: 0 auto;
+}
+
+#outer {
+    width: 100%;
+}
